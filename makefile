@@ -36,7 +36,7 @@ $(WORKDIR)/%/mask.nii.gz: $(DATADIR)/%/label.nii
 
 tex:
 	for  iddata in $(SUBDIRS) ;do find  $(WORKDIR)/$$iddata/ -type d -printf "\\\\viewdata{%p}\n" | sort -V ; echo "\clearpage"; done > DoNotCOMMIT.tex
-	pdflatex ViewProcessed.tex
+	pdflatex -output-directory $(WORKDIR) ViewProcessed.tex
 
 #run mixture model to segment the image
 #https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html
