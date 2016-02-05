@@ -34,6 +34,11 @@ $(WORKDIR)/%/mask.nii.gz: $(DATADIR)/%/label.nii
 	-c3d $(DATADIR)/$*/label.nii -slice z `python slicecentroid.py --imagefile=$@` -dup -oli dfltlabels.txt 1.0   -type uchar -omc $(WORKDIR)/$*/label.png
 	$(C3DEXE) $<  -binarize  -o $@
 
+tex:
+	for  iddata in $(SUBDIRS) ;do find  $(WORKDIR)/$$iddata/ -type d -printf "\\\\viewdata{%p}\n" | sort -V ; echo "\clearpage"; done > DoNotCOMMIT.tex
+	pdflatex ViewProcessed.tex
+
+
 #run mixture model to segment the image
 #https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html
 #https://www.gnu.org/software/make/manual/html_node/Secondary-Expansion.html#Secondary-Expansion
@@ -41,3 +46,5 @@ $(WORKDIR)/%/mask.nii.gz: $(DATADIR)/%/label.nii
 $(WORKDIR)/%.GMM.nii.gz: $(DATADIR)/%.nii $(WORKDIR)/$$(*D)/mask.nii.gz
 	./createFeatureImages.sh  -d 3 -x $(word 2,$^) -l 1 -n anat -a $<  -r 1 -r 3 -r 5 -s 2 -b 3  -o $(WORKDIR)/$(*D)/texture
 	echo $@
+
+
