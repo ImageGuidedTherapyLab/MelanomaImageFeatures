@@ -49,16 +49,9 @@
 \usepackage{wrapfig,setspace}
 \usepackage[pdftex, plainpages=false, colorlinks=true, citecolor=black, filecolor=black, linkcolor=black, urlcolor=black]{hyperref}
 
-%% textureanat_ATROPOS_GMM_ECCENTRICITY.png                  
-%% textureanat_ATROPOS_GMM_ELONGATION.png                    
-%% textureanat_ATROPOS_GMM_PHYSICAL_VOLUME.png               
 %% textureanat_ATROPOS_GMM.png                               
 %% textureanat_ATROPOS_GMM_VOLUME_TO_SURFACE_AREA_RATIO.png  
 %% textureanat_DENOISE.png                                   
-%% textureanat_ENTROPY_RADIUS_1.png                          
-%% textureanat_ENTROPY_RADIUS_3.png                       
-%% textureanat_ENTROPY_RADIUS_5.png
-%% textureNORMALIZED_DISTANCE.png
 
 
 
@@ -66,7 +59,7 @@
 \newcommand\viewdata[1]{
 \begin{figure}[h]
 \begin{tabular}{cccccccc} 
- \IfFileExists{./#1/textureanat.png               }{\includegraphics[width=0.1\textwidth]{./#1/textureanat.png}               }{\fbox{\begin{picture}(10,10)\put(0,5){ not found } \end{picture}}}
+ \IfFileExists{./#1/textureanat.png               }{\includegraphics[width=0.1\textwidth]{./{#1}/textureanat.png}               }{\fbox{\begin{picture}(10,10)\put(0,5){ not found } \end{picture}}}
 &\IfFileExists{./#1/textureanat_MEAN_RADIUS_1.png }{\includegraphics[width=0.1\textwidth]{./{#1}/textureanat_MEAN_RADIUS_1.png}  }{\fbox{\begin{picture}(10,10)\put(0,5){ not found } \end{picture}}}
 &\IfFileExists{./#1/textureanat_MEAN_RADIUS_3.png }{\includegraphics[width=0.1\textwidth]{./{#1}/textureanat_MEAN_RADIUS_3.png}  }{\fbox{\begin{picture}(10,10)\put(0,5){ not found } \end{picture}}}
 &\IfFileExists{./#1/textureanat_MEAN_RADIUS_5.png }{\includegraphics[width=0.1\textwidth]{./{#1}/textureanat_MEAN_RADIUS_5.png}  }{\fbox{\begin{picture}(10,10)\put(0,5){ not found } \end{picture}}}
@@ -76,7 +69,7 @@
 \\ 
 orig    &  mean-1  & mean-3 & mean-5 & sigma-1  & sigma-3 & sigma-5 
 \\ 
- \IfFileExists{./#1/label.png                               }{\includegraphics[width=0.1\textwidth]{./#1/label.png}                                 }{\fbox{\begin{picture}(10,10)\put(0,5){ not found } \end{picture}}}
+ \IfFileExists{./#1/label.png                              }{\includegraphics[width=0.1\textwidth]{./{#1}/label.png}                                 }{\fbox{\begin{picture}(10,10)\put(0,5){ not found } \end{picture}}}
 &\IfFileExists{./#1/textureanat_ATROPOS_GMM_POSTERIORS1.png}{\includegraphics[width=0.1\textwidth]{./{#1}/textureanat_ATROPOS_GMM_POSTERIORS1.png}  }{\fbox{\begin{picture}(10,10)\put(0,5){ not found } \end{picture}}}
 &\IfFileExists{./#1/textureanat_ATROPOS_GMM_POSTERIORS2.png}{\includegraphics[width=0.1\textwidth]{./{#1}/textureanat_ATROPOS_GMM_POSTERIORS2.png}  }{\fbox{\begin{picture}(10,10)\put(0,5){ not found } \end{picture}}}
 &\IfFileExists{./#1/textureanat_ATROPOS_GMM_POSTERIORS3.png}{\includegraphics[width=0.1\textwidth]{./{#1}/textureanat_ATROPOS_GMM_POSTERIORS3.png}  }{\fbox{\begin{picture}(10,10)\put(0,5){ not found } \end{picture}}}
@@ -86,11 +79,29 @@ orig    &  mean-1  & mean-3 & mean-5 & sigma-1  & sigma-3 & sigma-5
 \\ 
 label    &  post-1  & post-2 & post-3 & skew-1  & skew-3 & skew-5 
 \\ 
+ \IfFileExists{./#1/textureNORMALIZED_DISTANCE.png             }{\includegraphics[width=0.1\textwidth]{./{#1}/textureNORMALIZED_DISTANCE.png}               }{\fbox{\begin{picture}(10,10)\put(0,5){ not found } \end{picture}}}
+&\IfFileExists{./#1/textureanat_ENTROPY_RADIUS_1.png           }{\includegraphics[width=0.1\textwidth]{./{#1}/textureanat_ENTROPY_RADIUS_1.png}             }{\fbox{\begin{picture}(10,10)\put(0,5){ not found } \end{picture}}}
+&\IfFileExists{./#1/textureanat_ENTROPY_RADIUS_3.png           }{\includegraphics[width=0.1\textwidth]{./{#1}/textureanat_ENTROPY_RADIUS_3.png}             }{\fbox{\begin{picture}(10,10)\put(0,5){ not found } \end{picture}}}
+&\IfFileExists{./#1/textureanat_ENTROPY_RADIUS_5.png           }{\includegraphics[width=0.1\textwidth]{./{#1}/textureanat_ENTROPY_RADIUS_5.png}             }{\fbox{\begin{picture}(10,10)\put(0,5){ not found } \end{picture}}}
+&\IfFileExists{./#1/textureanat_ATROPOS_GMM_ECCENTRICITY.png   }{\includegraphics[width=0.1\textwidth]{./{#1}/textureanat_ATROPOS_GMM_ECCENTRICITY.png}     }{\fbox{\begin{picture}(10,10)\put(0,5){ not found } \end{picture}}}
+&\IfFileExists{./#1/textureanat_ATROPOS_GMM_ELONGATION.png     }{\includegraphics[width=0.1\textwidth]{./{#1}/textureanat_ATROPOS_GMM_ELONGATION.png}       }{\fbox{\begin{picture}(10,10)\put(0,5){ not found } \end{picture}}}
+&\IfFileExists{./#1/textureanat_ATROPOS_GMM_PHYSICAL_VOLUME.png}{\includegraphics[width=0.1\textwidth]{./{#1}/textureanat_ATROPOS_GMM_PHYSICAL_VOLUME.png}  }{\fbox{\begin{picture}(10,10)\put(0,5){ not found } \end{picture}}}
+\\ 
+distance    &  entropy-1  & entropy-3 & entropy-5 & eccentricity-1  & elongation-3 & volume
+\\ 
 \end{tabular}           
 \caption{#1}\label{Fig:#1}
 \end{figure}
 }
 \fi
+
+%% 
+%%                
+%%             
+%% 
+%%                
+%%                
+%%                
 
 \author{
         D.~Fuentes\textsuperscript{1} \
