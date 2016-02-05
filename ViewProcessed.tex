@@ -173,9 +173,11 @@ Received: date / Accepted: date
 \caption{
 Data Service Workflow.
 Medically trained user transfers studies from PACS to image 
-processing workstation for manual labeling, data curating, and building a training database.
+processing dicom server for manual labeling, data curating, and building a training database.
+GPFS file system is shared between the image processing server and eagle.
 Analysis-ready data is transferred to HPC server to texture features and image feature generation.
-Results are then collected in Meta-engine for visualization and interpretation.
+Ideally, MetaEngine should manage all queries, processing, dataflow, 
+and collect all results for visualization and interpretation.
 }\label{Fig:DataFlow}
 \end{figure}
 
@@ -206,8 +208,80 @@ $ ls DataDirectory/MRN/MM.DD.YYYY/
 anatomy.nii  label.nii
 \end{verbatim}
 
-
 \pagebreak
+{\small
+\begin{verbatim}
+Dependencies
+============
+
+
+http://otbcb.readthedocs.org/en/latest/index.html
+$ module show otb/4.2.0
+-------------------------------------------------------------------
+/usr/local/Modules/3.2.10/modulefiles/otb/4.2.0:
+
+module-whatis            set environment variables to build OTB OTB-4.2.0
+module-whatis
+                 simple build
+module-whatis            cmake -DCMAKE_CXX_COMPILER=/usr/bin/g++-4.4 -DCMAKE_C_COMPILER=/usr/bin/gcc-4.4 -DCMAKE_BUILD_TYPE=Debug -DBUILD_SHARED_LIBS=Off -DOTB_USE_EXTERNAL_LIBKML=ON -DBUILD_APPLICATIONS=OFF -DBUILD_EXAMPLES=OFF -DBUILD_TESTING=OFF -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_INSTALL_PREFIX=$OTB_HOME ../OTB-4.2.0
+setenv           OTB_VERSION OTB-4.2.0
+setenv           OTB_SOURCE /opt/apps/OTB/OTB-4.2.0
+setenv           OTB_HOME /opt/apps/OTB/OTB-4.2.0-gcc-4.4.7-dbg
+setenv           OTB_DIR /opt/apps/OTB/OTB-4.2.0-gcc-4.4.7-dbg/lib/otb
+-------------------------------------------------------------------
+
+http://sourceforge.net/p/advants/kaena/ci/master/tree/
+$ module help ants/dev
+
+----------- Module Specific Help for 'ants/dev' -------------------
+
+        This module loads ANTsR dev
+
+
+
+         ######### need latest version of R, edit sources.list
+        $ tail /etc/apt/sources.list
+        deb http://cran.r-project.org/bin/linux/ubuntu/ precise/
+
+
+        local({r <- getOption('repos');
+               r['CRAN'] <- 'http://cran.r-project.org'; options(repos=r)})
+         install.packages('Rcpp',type='source')
+         mypkg<-c('signal','timeSeries','mFilter','MASS','robust','magic','knitr','pixmap','rgl','misc3d')
+         for ( x in mypkg )
+           {
+           install.packages(x)
+           }
+
+
+        sudo apt-get update
+        sudo apt-get install r-base
+        sudo apt-get install r-base-dev
+
+
+         ######### install from github
+
+         wget https://raw.github.com/stnava/RMI/master/stnava/install_anstr_packages.sh
+
+         ./install_anstr_packages.sh /opt/apps/ANTsR/dev/    0 1
+
+
+
+         ######### edit cmake file to use dbg mode ??
+         /opt/apps/ANTsR/dev//ANTsR_src/ANTsR/src/CMakeLists.txt
+
+
+         diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+         index c4b1c0c..b88126c 100644
+         --- a/src/CMakeLists.txt
+         +++ b/src/CMakeLists.txt
+         @@ -20,6 +20,7 @@ ExternalProject_Add( ANTS
+                        -D COPY_SCRIPT_FILES_TO_BIN_DIR=ON # for useful things like buildtemplateparallel
+                        -D BUILD_SHARED_LIBS=OFF # R requires shared objects
+                        -D BUILD_TESTING=OFF # reduces build time
+                        -D BUILD=DEBUG
+\end{verbatim}
+}
 
 \setlength{\unitlength}{.15cm}
 \input{DoNotCOMMIT.tex}
