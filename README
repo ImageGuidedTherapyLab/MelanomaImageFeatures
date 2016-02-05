@@ -1,0 +1,5 @@
+
+Usage
+=====
+
+    while [ 1 ] ; do make -f makefile -i -k ; sleep 5 ; done
