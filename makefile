@@ -29,7 +29,9 @@ stats: $(foreach idimage,$(IMAGELIST),$(addsuffix /$(idimage).GMM.nii.gz,$(addpr
 $(WORKDIR)/%/mask.nii.gz: $(DATADIR)/%/label.nii
 	mkdir -p $(WORKDIR)/$*
 	echo vglrun itksnap -g $(DATADIR)/$*/anatomy.nii -s $(DATADIR)/$*/label.nii 
+	
 	-c3d $(DATADIR)/$*/anatomy.nii $(DATADIR)/$*/label.nii  -lstat
+	-c3d $(DATADIR)/$*/label.nii -slice z `python slicecentroid.py --imagefile=$@` -dup -oli dfltlabels.txt 1.0   -type uchar -omc $(WORKDIR)/$*/label.png
 	$(C3DEXE) $<  -binarize  -o $@
 
 #run mixture model to segment the image
