@@ -421,21 +421,21 @@ for (( i = 0; i < ${#NORMALIZED_IMAGES[@]}; i++ ))
           fi
 
         ## TODO - otb taking too long...
-        ## # otb cooccurence matrix images
-        ## OTBBASEIMAGE=${OUTPUT_PREFIX}${IMAGE_NAMES[$i]}_OTB
-        ## # otb should write haralick image last...
-        ## if [[ ! -f ${OTBBASEIMAGE}HaralickCorrelation_${RADII[$j]}.${OUTPUT_SUFFIX} ]];
-        ##   then
-        ##     logCmd ${ANTSPATH}/otbScalarImageToTexturesFilter ${RESCALED_IMAGES[$i]} $OTBBASEIMAGE 20 ${RADII[$j]}
-        ##     logCmd c3d ${OTBBASEIMAGE}ClusterProminence_${RADII[$j]}.nii.gz       -slice z $CENTROIDSLICE -clip 0 inf  -color-map grey -type uchar -omc ${OTBBASEIMAGE}ClusterProminence_${RADII[$j]}.png
-        ##     logCmd c3d ${OTBBASEIMAGE}Energy_${RADII[$j]}.nii.gz                  -slice z $CENTROIDSLICE -clip 0 inf  -color-map grey -type uchar -omc ${OTBBASEIMAGE}Energy_${RADII[$j]}.png
-        ##     logCmd c3d ${OTBBASEIMAGE}Inertia_${RADII[$j]}.nii.gz                 -slice z $CENTROIDSLICE -clip 0 inf  -color-map grey -type uchar -omc ${OTBBASEIMAGE}Inertia_${RADII[$j]}.png
-        ##     logCmd c3d ${OTBBASEIMAGE}ClusterShade_${RADII[$j]}.nii.gz            -slice z $CENTROIDSLICE -clip 0 inf  -color-map grey -type uchar -omc ${OTBBASEIMAGE}ClusterShade_${RADII[$j]}.png
-        ##     logCmd c3d ${OTBBASEIMAGE}Entropy_${RADII[$j]}.nii.gz                 -slice z $CENTROIDSLICE -clip 0 inf  -color-map grey -type uchar -omc ${OTBBASEIMAGE}Entropy_${RADII[$j]}.png
-        ##     logCmd c3d ${OTBBASEIMAGE}InverseDifferenceMoment_${RADII[$j]}.nii.gz -slice z $CENTROIDSLICE -clip 0 inf  -color-map grey -type uchar -omc ${OTBBASEIMAGE}InverseDifferenceMoment_${RADII[$j]}.png
-        ##     logCmd c3d ${OTBBASEIMAGE}Correlation_${RADII[$j]}.nii.gz             -slice z $CENTROIDSLICE -clip 0 inf  -color-map grey -type uchar -omc ${OTBBASEIMAGE}Correlation_${RADII[$j]}.png
-        ##     logCmd c3d ${OTBBASEIMAGE}HaralickCorrelation_${RADII[$j]}.nii.gz     -slice z $CENTROIDSLICE -clip 0 inf  -color-map grey -type uchar -omc ${OTBBASEIMAGE}HaralickCorrelation_${RADII[$j]}.png
-        ##   fi
+        # otb cooccurence matrix images
+        OTBBASEIMAGE=${OUTPUT_PREFIX}${IMAGE_NAMES[$i]}_OTB
+        # otb should write haralick image last...
+        if [[ ! -f ${OTBBASEIMAGE}HaralickCorrelation_${RADII[$j]}.${OUTPUT_SUFFIX} ]];
+          then
+            logCmd ${ANTSPATH}/otbScalarImageToTexturesFilter ${RESCALED_IMAGES[$i]} $OTBBASEIMAGE 20 ${RADII[$j]}
+            logCmd c3d ${OTBBASEIMAGE}ClusterProminence_${RADII[$j]}.nii.gz       -slice z $CENTROIDSLICE -clip 0 inf  -color-map grey -type uchar -omc ${OTBBASEIMAGE}ClusterProminence_${RADII[$j]}.png
+            logCmd c3d ${OTBBASEIMAGE}Energy_${RADII[$j]}.nii.gz                  -slice z $CENTROIDSLICE -clip 0 inf  -color-map grey -type uchar -omc ${OTBBASEIMAGE}Energy_${RADII[$j]}.png
+            logCmd c3d ${OTBBASEIMAGE}Inertia_${RADII[$j]}.nii.gz                 -slice z $CENTROIDSLICE -clip 0 inf  -color-map grey -type uchar -omc ${OTBBASEIMAGE}Inertia_${RADII[$j]}.png
+            logCmd c3d ${OTBBASEIMAGE}ClusterShade_${RADII[$j]}.nii.gz            -slice z $CENTROIDSLICE -clip 0 inf  -color-map grey -type uchar -omc ${OTBBASEIMAGE}ClusterShade_${RADII[$j]}.png
+            logCmd c3d ${OTBBASEIMAGE}Entropy_${RADII[$j]}.nii.gz                 -slice z $CENTROIDSLICE -clip 0 inf  -color-map grey -type uchar -omc ${OTBBASEIMAGE}Entropy_${RADII[$j]}.png
+            logCmd c3d ${OTBBASEIMAGE}InverseDifferenceMoment_${RADII[$j]}.nii.gz -slice z $CENTROIDSLICE -clip 0 inf  -color-map grey -type uchar -omc ${OTBBASEIMAGE}InverseDifferenceMoment_${RADII[$j]}.png
+            logCmd c3d ${OTBBASEIMAGE}Correlation_${RADII[$j]}.nii.gz             -slice z $CENTROIDSLICE -clip 0 inf  -color-map grey -type uchar -omc ${OTBBASEIMAGE}Correlation_${RADII[$j]}.png
+            logCmd c3d ${OTBBASEIMAGE}HaralickCorrelation_${RADII[$j]}.nii.gz     -slice z $CENTROIDSLICE -clip 0 inf  -color-map grey -type uchar -omc ${OTBBASEIMAGE}HaralickCorrelation_${RADII[$j]}.png
+          fi
 
       done
   done

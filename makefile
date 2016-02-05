@@ -30,14 +30,13 @@ $(WORKDIR)/%/mask.nii.gz: $(DATADIR)/%/label.nii
 	mkdir -p $(WORKDIR)/$*
 	echo vglrun itksnap -g $(DATADIR)/$*/anatomy.nii -s $(DATADIR)/$*/label.nii 
 	
-	-c3d $(DATADIR)/$*/anatomy.nii $(DATADIR)/$*/label.nii  -lstat
+	-c3d $(DATADIR)/$*/anatomy.nii $(DATADIR)/$*/label.nii  -lstat > $(WORKDIR)/$*/labelstat.txt 2>&1
 	-c3d $(DATADIR)/$*/label.nii -slice z `python slicecentroid.py --imagefile=$@` -dup -oli dfltlabels.txt 1.0   -type uchar -omc $(WORKDIR)/$*/label.png
 	$(C3DEXE) $<  -binarize  -o $@
 
 tex:
 	for  iddata in $(SUBDIRS) ;do find  $(WORKDIR)/$$iddata/ -type d -printf "\\\\viewdata{%p}\n" | sort -V ; echo "\clearpage"; done > DoNotCOMMIT.tex
 	pdflatex ViewProcessed.tex
-
 
 #run mixture model to segment the image
 #https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html

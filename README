@@ -2,4 +2,5 @@
 Usage
 =====
 
-    while [ 1 ] ; do make -f makefile -i -k ; sleep 5 ; done
+    while [ 1 ] ; do make -f makefile -i -k ; make -f makefile tex ;sleep 5 ; done
+     

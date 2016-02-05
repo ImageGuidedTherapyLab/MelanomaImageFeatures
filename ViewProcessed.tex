@@ -52,6 +52,17 @@
 %% textureanat_ATROPOS_GMM.png                               
 %% textureanat_ATROPOS_GMM_VOLUME_TO_SURFACE_AREA_RATIO.png  
 %% textureanat_DENOISE.png                                   
+%% textureanat_ATROPOS_GMM_CANNY.png
+%% textureanat_ClusterProminence_1.png                 textureanat_ClusterProminence_5.png                     
+%% textureanat_Energy_1.png                            textureanat_Energy_5.png                     
+%% textureanat_Inertia_1.png                           textureanat_Inertia_5.png                    
+%% textureanat_ClusterShade_1.png                      textureanat_ClusterShade_5.png               
+%% textureanat_Entropy_1.png                           textureanat_Entropy_5.png                    
+%% textureanat_InverseDifferenceMoment_1.png           textureanat_InverseDifferenceMoment_5.png    
+%% textureanat_Correlation_1.png                       textureanat_Correlation_5.png                
+%% textureanat_HaralickCorrelation_1.png               textureanat_HaralickCorrelation_5.png        
+
+
 
 
 
@@ -85,11 +96,21 @@ label    &  post-1  & post-2 & post-3 & skew-1  & skew-3 & skew-5
 &\IfFileExists{./#1/textureanat_ENTROPY_RADIUS_5.png           }{\includegraphics[width=0.1\textwidth]{./{#1}/textureanat_ENTROPY_RADIUS_5.png}             }{\fbox{\begin{picture}(10,10)\put(0,5){ not found } \end{picture}}}
 &\IfFileExists{./#1/textureanat_ATROPOS_GMM_ECCENTRICITY.png   }{\includegraphics[width=0.1\textwidth]{./{#1}/textureanat_ATROPOS_GMM_ECCENTRICITY.png}     }{\fbox{\begin{picture}(10,10)\put(0,5){ not found } \end{picture}}}
 &\IfFileExists{./#1/textureanat_ATROPOS_GMM_ELONGATION.png     }{\includegraphics[width=0.1\textwidth]{./{#1}/textureanat_ATROPOS_GMM_ELONGATION.png}       }{\fbox{\begin{picture}(10,10)\put(0,5){ not found } \end{picture}}}
-&\IfFileExists{./#1/textureanat_ATROPOS_GMM_PHYSICAL_VOLUME.png}{\includegraphics[width=0.1\textwidth]{./{#1}/textureanat_ATROPOS_GMM_PHYSICAL_VOLUME.png}  }{\fbox{\begin{picture}(10,10)\put(0,5){ not found } \end{picture}}}
+&\IfFileExists{./#1/textureanat_GRADIENT.png                   }{\includegraphics[width=0.1\textwidth]{./{#1}/textureanat_GRADIENT.png}                     }{\fbox{\begin{picture}(10,10)\put(0,5){ not found } \end{picture}}}
 \\ 
-distance    &  entropy-1  & entropy-3 & entropy-5 & eccentricity-1  & elongation-3 & volume
+distance    &  entropy-1  & entropy-3 & entropy-5 & eccentricity-1  & elongation-3 & gradient
 \\ 
+ \IfFileExists{./#1/textureanat_OTBClusterProminence_3.png      }{\includegraphics[width=0.1\textwidth]{./{#1}/textureanat_OTBClusterProminence_3.png}      }{\fbox{\begin{picture}(10,10)\put(0,5){ not found } \end{picture}}}
+&\IfFileExists{./#1/textureanat_OTBEnergy_3.png                 }{\includegraphics[width=0.1\textwidth]{./{#1}/textureanat_OTBEnergy_3.png}                 }{\fbox{\begin{picture}(10,10)\put(0,5){ not found } \end{picture}}}
+&\IfFileExists{./#1/textureanat_OTBInertia_3.png                }{\includegraphics[width=0.1\textwidth]{./{#1}/textureanat_OTBInertia_3.png}                }{\fbox{\begin{picture}(10,10)\put(0,5){ not found } \end{picture}}}
+&\IfFileExists{./#1/textureanat_OTBClusterShade_3.png           }{\includegraphics[width=0.1\textwidth]{./{#1}/textureanat_OTBClusterShade_3.png}           }{\fbox{\begin{picture}(10,10)\put(0,5){ not found } \end{picture}}}
+&\IfFileExists{./#1/textureanat_OTBInverseDifferenceMoment_3.png}{\includegraphics[width=0.1\textwidth]{./{#1}/textureanat_OTBInverseDifferenceMoment_3.png}}{\fbox{\begin{picture}(10,10)\put(0,5){ not found } \end{picture}}}
+&\IfFileExists{./#1/textureanat_OTBCorrelation_3.png            }{\includegraphics[width=0.1\textwidth]{./{#1}/textureanat_OTBCorrelation_3.png}            }{\fbox{\begin{picture}(10,10)\put(0,5){ not found } \end{picture}}}
+&\IfFileExists{./#1/textureanat_OTBHaralickCorrelation_3.png    }{\includegraphics[width=0.1\textwidth]{./{#1}/textureanat_OTBHaralickCorrelation_3.png}    }{\fbox{\begin{picture}(10,10)\put(0,5){ not found } \end{picture}}}
+\\ 
+ClusterProminence &Energy &Inertia &ClusterShade &InvDiffMoment &Correlation &HaralickCorrelation
 \end{tabular}           
+\verbatiminput{#1/labelstat.txt}
 \caption{#1}\label{Fig:#1}
 \end{figure}
 }
@@ -121,6 +142,34 @@ Received: date / Accepted: date
 
 \begin{document}
 
+\begin{itemize}
+\item
+Use WinSCP (\href{https://winscp.net/}{https://winscp.net/})
+or CyberDuck (\href{https://cyberduck.io/}{https://cyberduck.io/})
+to upload image sets to:
+\begin{itemize}
+\item
+\texttt{igilab@192.168.24.101:/workarea/igilab/github/MelanomaImageFeatures/DataDirectory/}
+\end{itemize}
+
+\item
+The corresponding processed images will appear at:
+\begin{itemize}
+\item
+\href{http://192.168.24.101/igilab/github/MelanomaImageFeatures/Processed/}{http://192.168.24.101/igilab/github/MelanomaImageFeatures/Processed/}
+\end{itemize}
+\end{itemize}
+
+
+Each image set should be in a separate directory and should follow
+the below naming convention \textit{exactly}:
+\begin{verbatim}
+$ ls DataDirectory/MRN/MM.DD.YYYY/
+anatomy.nii  label.nii
+\end{verbatim}
+
+\vspace{4in}
+\pagebreak
 
 \setlength{\unitlength}{.15cm}
 \input{DoNotCOMMIT.tex}
