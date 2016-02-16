@@ -12,7 +12,7 @@ ANTSIMAGEMATHCMD=$(ANTSPATH)/ImageMath $(DIMENSION)
 NIFTITOOLS=nifti_tools
 
 #https://www.gnu.org/software/make/manual/html_node/Special-Targets.html
-.SECONDARY:
+.SECONDARY: $(addsuffix /mask.centroid.txt,$(addprefix $(WORKDIR)/,$(SUBDIRS))) $(addsuffix /mask.nii.gz,$(addprefix $(WORKDIR)/,$(SUBDIRS)))
 
 IMAGELIST= anatomy
 
@@ -25,18 +25,24 @@ SUBDIRS := $(shell find DataDirectory/ -mindepth 2 -links 2 -type d -print | cut
 
 #build list of image statistics to be computed 
 stats: $(foreach idimage,$(IMAGELIST),$(addsuffix /$(idimage).GMM.nii.gz,$(addprefix $(WORKDIR)/,$(SUBDIRS))))
+png: $(addsuffix /label.png,$(addprefix $(WORKDIR)/,$(SUBDIRS)))
 
 $(WORKDIR)/%/mask.nii.gz: $(DATADIR)/%/label.nii
 	mkdir -p $(WORKDIR)/$*
 	echo vglrun itksnap -g $(DATADIR)/$*/anatomy.nii -s $(DATADIR)/$*/label.nii 
-	
 	-c3d $(DATADIR)/$*/anatomy.nii $(DATADIR)/$*/label.nii  -lstat > $(WORKDIR)/$*/labelstat.txt 2>&1
-	-c3d $(DATADIR)/$*/label.nii -slice z `python slicecentroid.py --imagefile=$@` -dup -oli dfltlabels.txt 1.0   -type uchar -omc $(WORKDIR)/$*/label.png
 	$(C3DEXE) $<  -binarize  -o $@
 
-tex:
-	for  iddata in $(SUBDIRS) ;do find  $(WORKDIR)/$$iddata/ -type d -printf "\\\\viewdata{%p}\n" | sort -V ; echo "\clearpage"; done > DoNotCOMMIT.tex
-	pdflatex -output-directory $(WORKDIR) ViewProcessed.tex
+$(WORKDIR)/%/mask.centroid.txt: $(WORKDIR)/%/mask.nii.gz
+	python slicecentroid.py --imagefile=$< > $@
+
+$(WORKDIR)/%/label.png: $(WORKDIR)/%/mask.centroid.txt
+	-c3d $(DATADIR)/$*/label.nii -slice z `cat $<` -dup -oli dfltlabels.txt 1.0   -type uchar -omc $(WORKDIR)/$*/label.png
+
+	#for  iddata in $(SUBDIRS) ;do find  $(WORKDIR)/$$iddata/ -type d -printf "\\\\viewdata{%p}\n" | sort -V ; echo "\clearpage"; done > DoNotCOMMIT.tex
+tex: png
+	for  iddata in $(SUBDIRS) ;do find  $(WORKDIR)/$$iddata/ -type d -printf "\\\\viewdata{%p}\n" | sort -V > DoNotCOMMIT.tex; pdflatex -output-directory $(WORKDIR)/$$iddata/ ViewProcessed.tex ; done 
+	pdftk `ls Processed/*/*/*.pdf | sort -V` cat output  out.pdf
 
 #run mixture model to segment the image
 #https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html
@@ -45,5 +51,3 @@ tex:
 $(WORKDIR)/%.GMM.nii.gz: $(DATADIR)/%.nii $(WORKDIR)/$$(*D)/mask.nii.gz
 	./createFeatureImages.sh  -d 3 -x $(word 2,$^) -l 1 -n anat -a $<  -r 1 -r 3 -r 5 -s 2 -b 3  -o $(WORKDIR)/$(*D)/texture
 	echo $@
-
-
